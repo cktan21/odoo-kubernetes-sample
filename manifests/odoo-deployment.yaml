@@ -16,21 +16,22 @@ spec:
     spec:
       affinity:
         podAffinity:
-          # here we want to deploy on the same region the the primary instance of postgres
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: cnpg.io/cluster
-                    operator: Exists
-                  - key: role
-                    operator: In
-                    values:
-                      - primary
-              topologyKey: topology.kubernetes.io/region
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: cnpg.io/cluster
+                      operator: Exists
+                    - key: role
+                      operator: In
+                      values:
+                        - primary
+                topologyKey: kubernetes.io/hostname
       initContainers:
         - name: odoo-init
-          image: odoo-kubernetes-sample:latest
-          imagePullPolicy: Never # For demo purpose. Image is pushed manually
+          image: helppls.azurecr.io/odoo-kubernetes:latest
+          imagePullPolicy: Always
           args:
             - /entrypoint-dbbase
           env: &env
@@ -53,16 +54,16 @@ spec:
                 name: odoo-env
       containers:
         - name: odoo
-          image: odoo-kubernetes-sample:latest
-          imagePullPolicy: Never # For demo purpose. Image is pushed manually
+          image: helppls.azurecr.io/odoo-kubernetes:latest
+          imagePullPolicy: Always
           env: *env
           envFrom: *envFrom
           resources:
             limits:
-              cpu: "1"
+              cpu: "500m"
               memory: 1Gi
             requests:
-              cpu: "1"
+              cpu: "250m"
               memory: 1Gi
           ports:
             - containerPort: 8069

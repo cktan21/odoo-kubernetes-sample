@@ -12,7 +12,7 @@ spec:
         - ALTER USER "odoo" WITH CREATEDB;
   enableSuperuserAccess: true # By default superuser access is not created on cluster bootstrap
   imageName: ghcr.io/cloudnative-pg/postgresql:16.3
-  imagePullPolicy: Never # Only for the demo
+  imagePullPolicy: Always
   instances: 1
   postgresql:
     parameters: # postgresql paramaters
