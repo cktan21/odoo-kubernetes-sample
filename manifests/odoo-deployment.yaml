@@ -30,7 +30,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       initContainers:
         - name: odoo-init
-          image: helppls.azurecr.io/odoo-kubernetes:latest
+          image: registry29.azurecr.io/odoo-kubernetes:latest
           imagePullPolicy: Always
           args:
             - /entrypoint-dbbase
@@ -54,7 +54,7 @@ spec:
                 name: odoo-env
       containers:
         - name: odoo
-          image: helppls.azurecr.io/odoo-kubernetes:latest
+          image: registry29.azurecr.io/odoo-kubernetes:latest
           imagePullPolicy: Always
           env: *env
           envFrom: *envFrom

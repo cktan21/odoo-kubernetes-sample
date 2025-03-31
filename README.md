@@ -55,9 +55,15 @@ Once the cluster is ready, the manifests can be applied with `kubectl apply -k m
 Each manifest can be applied manually with `kubectl apply -f manifest/postgresql.yaml` for exemple
 
 
+```bash
+az login
+az aks get-credentials --resource-group resource2 --name cluster2  
 
-
-
+flux install
+kubectl apply -f https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.21/releases/cnpg-1.21.3.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -k manifests
+```
 
 
 
